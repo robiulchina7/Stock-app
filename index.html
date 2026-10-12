@@ -26,49 +26,43 @@ h2{font-size:16px;margin:18px 16px 8px}
 .grid{padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
 .sw{width:64px;height:64px;border-radius:50%;margin:0 auto 8px;border:1px solid var(--line);box-shadow:inset 0 0 0 4px var(--card)}
-.cc strong{display:block;font-weight:600}
-.cc b{font-size:26px;line-height:1.2}.cc small{color:var(--mute);display:block}
-.cc.low b{color:var(--warn)}
+.cc strong{display:block;font-weight:600}.cc b{font-size:26px;line-height:1.2}.cc small{color:var(--mute);display:block}.cc.low b{color:var(--warn)}
 button{font:inherit;cursor:pointer}
 .btn{background:var(--acc);color:var(--ai);border:0;border-radius:12px;padding:12px 16px;font-weight:600;width:100%}
-.btn.sec{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
-.btn.sm{width:auto;padding:6px 12px;font-size:14px}
+.btn.sec{background:var(--bg);color:var(--ink);border:1px solid var(--line)}.btn.sm{width:auto;padding:6px 12px;font-size:14px}
 input,select,textarea{font:inherit;width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 input[type=color]{padding:2px;height:46px}
 label{font-size:14px;color:var(--mute);display:grid;gap:4px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.box small{color:var(--mute);display:block;font-size:13px}
-.p{color:var(--acc);font-weight:700}.m{color:var(--out);font-weight:700}
-.bal{background:var(--acc);color:var(--ai);border-radius:16px;padding:16px;margin:0 16px}
-.bal b{display:block;font-size:32px;line-height:1.2}
+.box small{color:var(--mute);display:block;font-size:13px}.p{color:var(--acc);font-weight:700}.m{color:var(--out);font-weight:700}
+.bal{background:var(--acc);color:var(--ai);border-radius:16px;padding:16px;margin:0 16px}.bal b{display:block;font-size:32px;line-height:1.2}
 .day{margin:14px 16px 6px;display:flex;justify-content:space-between;color:var(--mute);font-size:14px;font-weight:600}
 .empty{padding:22px 16px;text-align:center;color:var(--mute)}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
-nav button{flex:1;background:none;border:0;padding:8px 2px;color:var(--mute);border-radius:10px;font-size:14px}
-nav button.on{color:var(--acc);font-weight:700}
-.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:9}
-.sheet.show{display:flex}
+nav button{flex:1;background:none;border:0;padding:8px 2px;color:var(--mute);border-radius:10px;font-size:14px}nav button.on{color:var(--acc);font-weight:700}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:9}.sheet.show{display:flex}
 .panel{background:var(--card);width:100%;max-width:640px;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:10px;max-height:92vh;overflow:auto}
-.panel h3{margin:0}
-.note{color:var(--mute);font-size:13px}
-.login{max-width:360px;margin:12vh auto 0;padding:0 20px;display:grid;gap:12px;text-align:center}
-.login .logo{width:84px;height:84px;margin:0 auto;border-radius:20px}
+.panel h3{margin:0}.note{color:var(--mute);font-size:13px}
+.login{max-width:360px;margin:12vh auto 0;padding:0 20px;display:grid;gap:12px;text-align:center}.login .logo{width:84px;height:84px;margin:0 auto;border-radius:20px}
 </style>
 </head>
 <body>
 <main id="app"></main>
 <div class="sheet" id="sh"><div class="panel" id="pn"></div></div>
 <script>
+'use strict';
 const KEY='wb_app_v2';
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-const def=()=>({co:{name:'আমার কোম্পানি',logo:''},pin:{admin:'1234',staff:'0000'},nid:4,
-colors:[{id:1,n:'লাল',hex:'#e03131',q:500},{id:2,n:'নীল',hex:'#1c7ed6',q:300},{id:3,n:'কালো',hex:'#212529',q:120}],
-prod:[],led:[],log:[]});
+const def=()=>({co:{name:'ART GALLERY',logo:''},pin:{admin:'1234',staff:'0000'},nid:4,
+ colors:[{id:1,n:'লাল',hex:'#e03131',q:500},{id:2,n:'নীল',hex:'#1c7ed6',q:300},{id:3,n:'কালো',hex:'#212529',q:120}],
+ prod:[],led:[],log:[],rem:{}});
 let S;try{S=JSON.parse(localStorage.getItem(KEY))||def()}catch(e){S=def()}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+S.co=S.co||{name:'ART GALLERY',logo:''};S.pin=S.pin||{admin:'1234',staff:'0000'};
+S.colors=S.colors||[];S.prod=S.prod||[];S.led=S.led||[];S.log=S.log||[];S.rem=S.rem||{};S.nid=S.nid||4;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){alert('ডেটা সংরক্ষণ করা যায়নি। ফোনের স্টোরেজ পরীক্ষা করুন।')}};
 const bn=n=>Number(n).toLocaleString('bn-BD');
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=s=>document.querySelector(s);
 window.alert=m=>{let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;left:16px;right:16px;bottom:calc(96px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 14px;border-radius:12px;z-index:20;text-align:center';document.body.appendChild(t)}t.textContent=m;t.style.display='block';clearTimeout(t.h);t.h=setTimeout(()=>t.style.display='none',3500)};
 let me=null,tab='stock';
@@ -76,121 +70,129 @@ const log=a=>{S.log.unshift({t:Date.now(),u:me,a});S.log=S.log.slice(0,1000);sav
 const fd=t=>{const d=new Date(t);return d.toLocaleDateString('bn-BD')+' '+d.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'})};
 const open=h=>{$('#pn').innerHTML=h;$('#sh').classList.add('show')};
 const close=()=>$('#sh').classList.remove('show');
-const logoEl=()=>S.co.logo?`<img src="${S.co.logo}" alt="">`:`<div class="logo"></div>`;
+const logoEl=()=>S.co.logo?`<img src="${S.co.logo}" alt="লোগো">`:`<div class="logo"></div>`;
 function login(){
- $('#app').innerHTML=`<div class="login">${logoEl().replace('<img','<img class="logo"')}<h1>${esc(S.co.name)}</h1><input id="pin" type="password" inputmode="numeric" placeholder="পিন দিন" autocomplete="off"><button class="btn" id="go">ঢুকুন</button><div class="note" id="er"></div></div>`;
+ $('#app').innerHTML=`<div class="login">${logoEl().replace('<img','<img class="logo"')}<h1>${esc(S.co.name)}</h1><input id="pin" type="password" inputmode="numeric" placeholder="পিন দিন" autocomplete="off"><button class="btn" id="go">ঢুকুন</button><div class="note" id="er"></div><div class="note">ডিফল্ট PIN: Admin 1234 · Staff 0000 (প্রথমে পরিবর্তন করুন)</div></div>`;
  $('#go').onclick=()=>{const p=$('#pin').value;
   if(p===S.pin.admin)me='admin';else if(p===S.pin.staff)me='staff';else{$('#er').textContent='পিন ভুল হয়েছে।';return}
   tab='stock';log('লগইন');render()};
+ $('#pin').onkeydown=e=>{if(e.key==='Enter')$('#go').click()};
 }
 function render(){
  if(!me){login();return}
  const A=me==='admin';
- const tabs=A?[['stock','স্টক'],['prod','প্রোডাকশন'],['acc','হিসাব'],['log','লগ'],['set','সেটিং']]:[];
+ const tabs=A?[['stock','স্টক'],['prod','প্রোডাকশন'],['acc','হিসাব'],['log','লগ'],['set','সেটিং']]:[['stock','স্টক'],['prod','প্রোডাকশন']];
  let h=`<header>${logoEl()}<h1>${esc(S.co.name)}<small>${A?'অ্যাডমিন':'স্টাফ'}</small></h1><button class="btn sec sm" id="out">বের হন</button></header>`;
- if(tab==='stock')h+=vStock(A);else if(tab==='prod')h+=vProd2();else if(tab==='acc')h+=vAcc();else if(tab==='log')h+=vLog();else h+=vSet();
- if(A)h+=`<nav>${tabs.map(t=>`<button data-t="${t[0]}" class="${tab===t[0]?'on':''}">${t[1]}</button>`).join('')}</nav>`;
+ if(tab==='stock')h+=vStock(A);else if(tab==='prod')h+=vProd2();else if(A&&tab==='acc')h+=vAcc();else if(A&&tab==='log')h+=vLog();else if(A&&tab==='set')h+=vSet();else {tab='stock';h+=vStock(A)}
+ h+=`<nav>${tabs.map(t=>`<button data-t="${t[0]}" class="${tab===t[0]?'on':''}">${t[1]}</button>`).join('')}</nav>`;
  $('#app').innerHTML=h;
 }
 function vStock(A){
- return `${A?`<div class="pad" style="padding-bottom:6px"><button class="btn" id="np">+ প্রোডাকশন এন্ট্রি</button><button class="btn sec" id="ns">+ নতুন স্টক এসেছে</button><button class="btn sec" id="nc">+ নতুন রঙ</button></div>`:''}<div class="bal" style="margin-top:12px"><small>মোট স্টক</small><b>${bn(S.colors.reduce((a,c)=>a+c.q,0))}</b><small>পিস · ${bn(S.colors.length)}টি রঙ</small></div><h2>রঙ অনুযায়ী স্টক</h2><div class="grid">${S.colors.length?S.colors.map(c=>`<div class="cc ${c.q<50?'low':''}" ${A?`data-c="${c.id}"`:''}><div class="sw" style="background:${c.hex}"></div><strong>${esc(c.n)}</strong><b>${bn(c.q)}</b><small>পিস</small></div>`).join(''):''}</div>${S.colors.length?'':'<div class="empty">কোনো রঙ নেই।</div>'}`;
+ return `<div class="pad" style="padding-bottom:6px"><button class="btn" id="np">+ প্রোডাকশন এন্ট্রি</button><button class="btn sec" id="ns">+ নতুন স্টক এসেছে</button>${A?'<button class="btn sec" id="nc">+ নতুন রঙ</button>':''}</div><div class="bal" style="margin-top:12px"><small>মোট স্টক</small><b>${bn(S.colors.reduce((a,c)=>a+c.q,0))}</b><small>পিস · ${bn(S.colors.length)}টি রঙ</small></div><h2>রঙ অনুযায়ী স্টক</h2><div class="grid">${S.colors.length?S.colors.map(c=>`<div class="cc ${c.q<50?'low':''}" data-c="${c.id}" role="button" tabindex="0"><div class="sw" style="background:${esc(c.hex)}"></div><strong>${esc(c.n)}</strong><b>${bn(c.q)}</b><small>পিস · পরিবর্তন করতে চাপ দিন</small></div>`).join(''):'<div class="empty">কোনো রঙ নেই।</div>'}</div>`;
 }
-function vProd(){
- return `<div class="pad"><button class="btn" id="np">+ প্রোডাকশন এন্ট্রি</button></div><h2>প্রোডাকশন তালিকা</h2><div class="pad">${S.prod.length?S.prod.map(p=>{const c=S.colors.find(x=>x.id===p.cid);return `<div class="box"><div><strong>${esc(c?c.n:'—')}</strong><small>${fd(p.t)} · ${p.k==='in'?'নতুন স্টক'+(p.note?' · '+esc(p.note):''):p.k==='adj'?'স্টক সংশোধন':'পরিমাণ '+bn(p.q)+', অতিরিক্ত '+bn(p.e)+', নষ্ট '+bn(p.d)+', স্যাম্পল '+bn(p.s)}</small></div><span class="${p.net>=0?'p':'m'}">${p.net>=0?'+':'−'}${bn(Math.abs(p.net))}</span></div>`}).join(''):'<div class="empty">এখনো কোনো প্রোডাকশন নেই।</div>'}</div>`;
-}
+function tx(p){return p.k==='in'?'নতুন স্টক'+(p.note?' · '+esc(p.note):''):p.k==='adj'?'স্টক সংশোধন'+(p.note?' · '+esc(p.note):''):'পরিমাণ '+bn(p.q)+', অতিরিক্ত '+bn(p.e)+', নষ্ট '+bn(p.d)+', স্যাম্পল '+bn(p.s)}
 const dk=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-const tx=p=>p.k==='in'?'নতুন স্টক'+(p.note?' · '+esc(p.note):''):p.k==='adj'?'স্টক সংশোধন':'পরিমাণ '+bn(p.q)+', অতিরিক্ত '+bn(p.e)+', নষ্ট '+bn(p.d)+', স্যাম্পল '+bn(p.s);
-function pline(p){const c=S.colors.find(x=>x.id===p.cid);return `<div class="box"><div><strong>${esc(c?c.n:'—')}</strong><small>${new Date(p.t).toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'})} · ${tx(p)}</small></div><span class="${p.net>=0?'p':'m'}">${p.net>=0?'+':'−'}${bn(Math.abs(p.net))}</span></div>`}
+function pline(p){const c=S.colors.find(x=>x.id===p.cid);return `<div class="box"><div><strong>${esc(c?c.n:'মুছে ফেলা রঙ')}</strong><small>${new Date(p.t).toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'})} · ${tx(p)}</small></div><span class="${p.net>=0?'p':'m'}">${p.net>=0?'+':'−'}${bn(Math.abs(p.net))}</span></div>`}
 function vProd2(){
- S.rem=S.rem||{};
  const days={};S.prod.forEach(p=>{const k=dk(p.t);(days[k]=days[k]||[]).push(p)});
  const ks=Object.keys(days).sort().reverse();
- return `<div class="pad"><button class="btn" id="np">+ প্রোডাকশন এন্ট্রি</button></div>${ks.length?ks.map(k=>{const L=days[k],net=L.reduce((a,p)=>a+p.net,0),sm={};L.forEach(p=>{sm[p.cid]=(sm[p.cid]||0)+p.net});
+ return `<div class="pad"><button class="btn" id="np">+ প্রোডাকশন এন্ট্রি</button><button class="btn sec" id="ns">+ নতুন স্টক এসেছে</button></div>${ks.length?ks.map(k=>{const L=days[k],net=L.reduce((a,p)=>a+p.net,0),sm={};L.forEach(p=>{sm[p.cid]=(sm[p.cid]||0)+p.net});
  const sum=Object.keys(sm).map(i=>{const c=S.colors.find(x=>x.id==i);return esc(c?c.n:'—')+' '+(sm[i]>=0?'+':'−')+bn(Math.abs(sm[i]))}).join(' · ');
- return `<div class="day"><span>${new Date(k+'T00:00').toLocaleDateString('bn-BD')}</span><span>দিনের নেট ${net<0?'−':'+'}${bn(Math.abs(net))}</span></div><div class="pad"><div class="note">${sum}</div>${L.map(pline).join('')}<div class="box"><div><small>মন্তব্য</small>${S.rem[k]?esc(S.rem[k]):'<span style="color:var(--mute)">কোনো মন্তব্য নেই</span>'}</div><button class="btn sec sm" data-r="${k}">${S.rem[k]?'বদলান':'+ মন্তব্য'}</button></div></div>`}).join(''):'<div class="empty">এখনো কোনো প্রোডাকশন নেই।</div>'}`;
+ return `<div class="day"><span>${new Date(k+'T00:00').toLocaleDateString('bn-BD')}</span><span>দিনের নেট ${net<0?'−':'+'}${bn(Math.abs(net))}</span></div><div class="pad"><div class="note">${sum}</div>${L.map(pline).join('')}<div class="box"><div><small>মন্তব্য</small>${S.rem[k]?esc(S.rem[k]):'<span style="color:var(--mute)">কোনো মন্তব্য নেই</span>'}</div>${me==='admin'?`<button class="btn sec sm" data-r="${k}">${S.rem[k]?'বদলান':'+ মন্তব্য'}</button>`:''}</div></div>`}).join(''):'<div class="empty">এখনো কোনো প্রোডাকশন নেই।</div>'}`;
 }
 function remSheet(k){
- S.rem=S.rem||{};
  open(`<h3>মন্তব্য — ${new Date(k+'T00:00').toLocaleDateString('bn-BD')}</h3><label>এই দিনের প্রোডাকশনের মন্তব্য<textarea id="rm" rows="4">${esc(S.rem[k]||'')}</textarea></label><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
  $('#cx').onclick=close;
  $('#ok').onclick=()=>{const v=$('#rm').value.trim();if(v)S.rem[k]=v;else delete S.rem[k];log('মন্তব্য '+k+': '+v);close();render()};
 }
 function vAcc(){
  const inn=S.led.filter(x=>x.k==='in').reduce((a,x)=>a+x.a,0),out=S.led.filter(x=>x.k==='out').reduce((a,x)=>a+x.a,0);
- const days={};S.led.forEach(x=>(days[x.d]=days[x.d]||[]).push(x));
- const ks=Object.keys(days).sort().reverse();
- return `<h2>হিসাব</h2><div class="bal"><small>বর্তমান ব্যালেন্স</small><b>৳ ${bn(inn-out)}</b><small>মোট জমা ৳${bn(inn)} · মোট খরচ ৳${bn(out)}</small></div><div class="pad" style="margin-top:10px"><button class="btn" id="na">+ জমা / খরচ যোগ করুন</button></div>${ks.length?ks.map(d=>{const L=days[d];const net=L.reduce((a,x)=>a+(x.k==='in'?x.a:-x.a),0);return `<div class="day"><span>${new Date(d+'T00:00').toLocaleDateString('bn-BD')}</span><span>দিনের নেট ${net<0?'−':''}৳${bn(Math.abs(net))}</span></div><div class="pad">${L.map(x=>`<div class="box"><div><strong>${esc(x.n||(x.k==='in'?'জমা':'খরচ'))}</strong></div><span class="${x.k==='in'?'p':'m'}">${x.k==='in'?'+':'−'}৳${bn(x.a)}</span></div>`).join('')}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই।</div>'}`;
+ const days={};S.led.forEach(x=>(days[x.d]=days[x.d]||[]).push(x));const ks=Object.keys(days).sort().reverse();
+ return `<h2>হিসাব</h2><div class="bal"><small>বর্তমান ব্যালেন্স</small><b>৳ ${bn(inn-out)}</b><small>মোট জমা ৳${bn(inn)} · মোট খরচ ৳${bn(out)}</small></div><div class="pad" style="margin-top:10px"><button class="btn" id="na">+ জমা / খরচ যোগ করুন</button></div>${ks.length?ks.map(d=>{const L=days[d],net=L.reduce((a,x)=>a+(x.k==='in'?x.a:-x.a),0);return `<div class="day"><span>${new Date(d+'T00:00').toLocaleDateString('bn-BD')}</span><span>দিনের নেট ${net<0?'−':''}৳${bn(Math.abs(net))}</span></div><div class="pad">${L.map(x=>`<div class="box"><div><strong>${esc(x.n||(x.k==='in'?'জমা':'খরচ'))}</strong></div><span class="${x.k==='in'?'p':'m'}">${x.k==='in'?'+':'−'}৳${bn(x.a)}</span></div>`).join('')}</div>`}).join(''):'<div class="empty">কোনো হিসাব নেই।</div>'}`;
 }
 function vLog(){return `<h2>অ্যাক্টিভিটি লগ</h2><div class="pad">${S.log.length?S.log.map(l=>`<div class="box"><div><strong>${esc(l.a)}</strong><small>${fd(l.t)} · ${l.u==='admin'?'অ্যাডমিন':'স্টাফ'}</small></div></div>`).join(''):'<div class="empty">লগ খালি।</div>'}</div>`}
-function vSet(){return `<h2>সেটিং</h2><div class="pad"><label>কোম্পানির নাম<input id="cn" value="${esc(S.co.name)}"></label><label>লোগো<input id="cl" type="file" accept="image/*"></label><div class="row"><label>অ্যাডমিন পিন<input id="pa" inputmode="numeric" value="${esc(S.pin.admin)}"></label><label>স্টাফ পিন<input id="ps" inputmode="numeric" value="${esc(S.pin.staff)}"></label></div><button class="btn" id="ss">সংরক্ষণ করুন</button><div class="note">এই ভার্সনে ডাটা শুধু এই ফোনে থাকে। একাধিক ফোনে শেয়ার করতে পরের ধাপে অনলাইন ডাটাবেস লাগবে।</div></div>`}
+function vSet(){return `<h2>সেটিং</h2><div class="pad"><label>কোম্পানির নাম<input id="cn" value="${esc(S.co.name)}"></label><label>লোগো<input id="cl" type="file" accept="image/*"></label><div class="row"><label>অ্যাডমিন পিন<input id="pa" inputmode="numeric" value="${esc(S.pin.admin)}"></label><label>স্টাফ পিন<input id="ps" inputmode="numeric" value="${esc(S.pin.staff)}"></label></div><button class="btn" id="ss">সংরক্ষণ করুন</button><div class="note">এই সংস্করণে ডেটা শুধু এই ফোন/ব্রাউজারে থাকে। একাধিক ফোনে একই ডেটা রাখতে অনলাইন ডেটাবেস ও নিরাপদ লগইন সেটআপ করতে হবে।</div></div>`}
 function prodSheet(){
  if(!S.colors.length){alert('আগে একটি রঙ যোগ করুন।');return}
  open(`<h3>প্রোডাকশন এন্ট্রি</h3><label>রঙ বেছে নিন<select id="pc">${S.colors.map(c=>`<option value="${c.id}">${esc(c.n)} (স্টক ${bn(c.q)})</option>`).join('')}</select></label><label>পরিমাণ<input id="pq" type="number" inputmode="numeric" min="0" value="0"></label><div class="row"><label>অতিরিক্ত (Extra)<input id="pe" type="number" inputmode="numeric" min="0" value="0"></label><label>নষ্ট (Damage)<input id="pd" type="number" inputmode="numeric" min="0" value="0"></label></div><label>স্যাম্পল<input id="ps" type="number" inputmode="numeric" min="0" value="0"></label><div class="note" id="pv"></div><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
- const net=()=>{const g=id=>Math.max(0,+$(id).value||0);return g('#pq')+g('#pe')-g('#pd')-g('#ps')};
+ const g=id=>Math.max(0,Math.floor(+$(id).value||0));
+ const net=()=>g('#pq')+g('#pe')-g('#pd')-g('#ps');
  const pv=()=>{const n=net();$('#pv').textContent='স্টক বদলাবে: '+(n>=0?'+':'−')+bn(Math.abs(n))+' (পরিমাণ + অতিরিক্ত − নষ্ট − স্যাম্পল)'};
- ['#pq','#pe','#pd','#ps'].forEach(i=>$(i).oninput=pv);pv();
- $('#cx').onclick=close;
- $('#ok').onclick=()=>{const c=S.colors.find(x=>x.id===+$('#pc').value),g=id=>Math.max(0,+$(id).value||0);
-  const q=g('#pq'),e=g('#pe'),d=g('#pd'),s=g('#ps'),n=q+e-d-s;
-  if(!q&&!e&&!d&&!s)return;
+ ['#pq','#pe','#pd','#ps'].forEach(i=>$(i).oninput=pv);pv();$('#cx').onclick=close;
+ $('#ok').onclick=()=>{const c=S.colors.find(x=>x.id===+$('#pc').value),q=g('#pq'),e=g('#pe'),d=g('#pd'),s=g('#ps'),n=q+e-d-s;
+  if(!q&&!e&&!d&&!s)return;if(!c){alert('রঙ পাওয়া যায়নি।');return}
   if(c.q+n<0){alert('স্টক ঋণাত্মক হয়ে যাবে। সংখ্যা ঠিক করুন।');return}
   c.q+=n;S.prod.unshift({t:Date.now(),cid:c.id,q,e,d,s,net:n});S.prod=S.prod.slice(0,1000);
   log(`প্রোডাকশন: ${c.n} → পরিমাণ ${q}, অতিরিক্ত ${e}, নষ্ট ${d}, স্যাম্পল ${s}`);close();render()};
 }
 function colorSheet(){
- open(`<h3>নতুন রঙ</h3><label>রঙের নাম<input id="cn2" placeholder="যেমন: আকাশি"></label><label>রঙ (ছবি)<input id="ch" type="color" value="#0e8f7e"></label><label>শুরুর পরিমাণ<input id="cq" type="number" inputmode="numeric" value="0"></label><button class="btn" id="ok">যোগ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
+ if(me!=='admin')return alert('শুধু Admin নতুন রঙ যোগ করতে পারবেন।');
+ open(`<h3>নতুন রঙ</h3><label>রঙের নাম<input id="cn2" placeholder="যেমন: আকাশি"></label><label>রঙ<input id="ch" type="color" value="#0e8f7e"></label><label>শুরুর পরিমাণ<input id="cq" type="number" inputmode="numeric" min="0" value="0"></label><button class="btn" id="ok">যোগ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
  $('#cx').onclick=close;
- $('#ok').onclick=()=>{const n=$('#cn2').value.trim();if(!n){$('#cn2').focus();return}
-  S.colors.push({id:S.nid++,n,hex:$('#ch').value,q:Math.max(0,+$('#cq').value||0)});log('নতুন রঙ যোগ: '+n);close();render()};
+ $('#ok').onclick=()=>{const n=$('#cn2').value.trim(),q=Math.max(0,Math.floor(+$('#cq').value||0));if(!n){$('#cn2').focus();return}
+  S.colors.push({id:S.nid++,n,hex:$('#ch').value,q});log('নতুন রঙ যোগ: '+n);close();render()};
+}
+function stockAdjustSheet(id){
+ const c=S.colors.find(x=>x.id===id);if(!c)return;
+ open(`<h3>সরাসরি স্টক পরিবর্তন</h3><div class="box"><div><strong>${esc(c.n)}</strong><small>বর্তমান স্টক</small></div><strong>${bn(c.q)} পিস</strong></div><label>নতুন সঠিক স্টক<input id="newq" type="number" min="0" step="1" inputmode="numeric" value="${c.q}"></label><label>পরিবর্তনের কারণ<input id="reason" placeholder="যেমন: স্টক গণনা অনুযায়ী সংশোধন"></label><button class="btn" id="saveq">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
+ $('#cx').onclick=close;
+ $('#saveq').onclick=()=>{const raw=$('#newq').value.trim(),q=Number(raw),reason=$('#reason').value.trim();
+  if(raw===''||!Number.isSafeInteger(q)||q<0){alert('সঠিক পূর্ণসংখ্যার স্টক লিখুন।');return}
+  const old=c.q,diff=q-old;if(diff===0){close();return}
+  c.q=q;S.prod.unshift({t:Date.now(),cid:c.id,q:0,e:0,d:0,s:0,net:diff,k:'adj',note:reason||'সরাসরি স্টক সংশোধন'});
+  S.prod=S.prod.slice(0,1000);log(`স্টক সংশোধন: ${c.n}, ${old} → ${q}, কারণ: ${reason||'উল্লেখ করা হয়নি'}`);save();close();render()};
 }
 function detailSheet(id){
- const c=S.colors.find(x=>x.id===id),L=S.prod.filter(p=>p.cid===id).slice(0,15);
- open(`<h3>${esc(c.n)} — স্টক ${bn(c.q)}</h3><div class="sw" style="background:${c.hex};margin:0 auto"></div>${L.length?L.map(p=>`<div class="box"><div><small>${fd(p.t)}</small>${p.k==='in'?'নতুন স্টক +'+bn(p.q)+(p.note?' · '+esc(p.note):''):p.k==='adj'?'সংশোধন '+(p.net>=0?'+':'−')+bn(Math.abs(p.net)):'পরিমাণ '+bn(p.q)+' · অতিরিক্ত '+bn(p.e)+' · নষ্ট '+bn(p.d)+' · স্যাম্পল '+bn(p.s)}</div></div>`).join(''):'<div class="empty">এই রঙের কোনো প্রোডাকশন নেই।</div>'}<button class="btn" id="si">+ নতুন স্টক যোগ</button><button class="btn sec" id="ec">রঙ সংশোধন</button><button class="btn sec" id="cx">বন্ধ করুন</button>`);$('#si').onclick=()=>stockInSheet(id);$('#ec').onclick=()=>editSheet(id);
+ const c=S.colors.find(x=>x.id===id);if(!c)return;
+ const L=S.prod.filter(p=>p.cid===id).slice(0,15);
+ open(`<h3>${esc(c.n)} — স্টক ${bn(c.q)}</h3><div class="sw" style="background:${esc(c.hex)};margin:0 auto"></div>${L.length?L.map(p=>`<div class="box"><div><small>${fd(p.t)}</small>${tx(p)}</div><span class="${p.net>=0?'p':'m'}">${p.net>=0?'+':'−'}${bn(Math.abs(p.net))}</span></div>`).join(''):'<div class="empty">এই রঙের কোনো প্রোডাকশন নেই।</div>'}${me==='admin'?'<button class="btn" id="si">+ নতুন স্টক যোগ</button><button class="btn sec" id="ec">রঙ সংশোধন</button>':'<button class="btn" id="si">+ নতুন স্টক যোগ</button><button class="btn sec" id="adj">সরাসরি স্টক পরিবর্তন</button>'}<button class="btn sec" id="cx">বন্ধ করুন</button>`);
+ $('#si').onclick=()=>stockInSheet(id);
+ if(me==='admin')$('#ec').onclick=()=>editSheet(id);else $('#adj').onclick=()=>stockAdjustSheet(id);
  $('#cx').onclick=close;
 }
 function stockInSheet(id){
  if(!S.colors.length){alert('আগে একটি রঙ যোগ করুন।');return}
  open(`<h3>নতুন স্টক যোগ</h3><label>রঙ বেছে নিন<select id="sc">${S.colors.map(c=>`<option value="${c.id}" ${c.id===id?'selected':''}>${esc(c.n)} (স্টক ${bn(c.q)})</option>`).join('')}</select></label><label>পরিমাণ<input id="sq" type="number" inputmode="numeric" min="1"></label><label>নোট (ঐচ্ছিক)<input id="sn" placeholder="যেমন: সরবরাহকারী / ব্যাচ"></label><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
  $('#cx').onclick=close;
- $('#ok').onclick=()=>{const c=S.colors.find(x=>x.id===+$('#sc').value),q=Math.floor(+$('#sq').value||0);if(q<=0){$('#sq').focus();return}
-  c.q+=q;S.prod.unshift({t:Date.now(),cid:c.id,q,e:0,d:0,s:0,net:q,k:'in',note:$('#sn').value.trim()});log(`নতুন স্টক: ${c.n} +${q}`);close();render()};
+ $('#ok').onclick=()=>{const c=S.colors.find(x=>x.id===+$('#sc').value),q=Math.floor(+$('#sq').value||0);if(q<=0){$('#sq').focus();return}if(!c)return;
+  c.q+=q;S.prod.unshift({t:Date.now(),cid:c.id,q,e:0,d:0,s:0,net:q,k:'in',note:$('#sn').value.trim()});S.prod=S.prod.slice(0,1000);log(`নতুন স্টক: ${c.n} +${q}`);close();render()};
 }
 function editSheet(id){
- const c=S.colors.find(x=>x.id===id);
- open(`<h3>রঙ সংশোধন</h3><label>রঙের নাম<input id="en" value="${esc(c.n)}"></label><label>রঙ (ছবি)<input id="eh" type="color" value="${c.hex}"></label><label>সঠিক স্টক (গণনা অনুযায়ী)<input id="eq" type="number" inputmode="numeric" min="0" value="${c.q}"></label><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button><button class="btn sec" id="dl" style="color:var(--out)">এই রঙ মুছুন</button>`);
- $('#cx').onclick=close;
- let sure=false;$('#dl').onclick=()=>{if(!sure){sure=true;$('#dl').textContent='নিশ্চিত? মুছতে আবার চাপুন';return}S.colors=S.colors.filter(x=>x.id!==id);log('রঙ মোছা: '+c.n);close();render()};
- $('#ok').onclick=()=>{const n=$('#en').value.trim(),q=Math.max(0,Math.floor(+$('#eq').value||0));if(!n){$('#en').focus();return}
-  const old=c.n+' / '+c.q,diff=q-c.q;
-  if(diff)S.prod.unshift({t:Date.now(),cid:c.id,q:0,e:0,d:0,s:0,net:diff,k:'adj'});
+ if(me!=='admin')return alert('শুধু Admin রঙ সংশোধন করতে পারবেন।');
+ const c=S.colors.find(x=>x.id===id);if(!c)return;
+ open(`<h3>রঙ সংশোধন</h3><label>রঙের নাম<input id="en" value="${esc(c.n)}"></label><label>রঙ<input id="eh" type="color" value="${esc(c.hex)}"></label><label>সঠিক স্টক (গণনা অনুযায়ী)<input id="eq" type="number" inputmode="numeric" min="0" value="${c.q}"></label><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button><button class="btn sec" id="dl" style="color:var(--out)">এই রঙ মুছুন</button>`);
+ $('#cx').onclick=close;let sure=false;
+ $('#dl').onclick=()=>{if(!sure){sure=true;$('#dl').textContent='নিশ্চিত? মুছতে আবার চাপুন';return}S.colors=S.colors.filter(x=>x.id!==id);log('রঙ মোছা: '+c.n);close();render()};
+ $('#ok').onclick=()=>{const n=$('#en').value.trim(),raw=$('#eq').value.trim(),q=Number(raw);if(!n){$('#en').focus();return}if(raw===''||!Number.isSafeInteger(q)||q<0){alert('সঠিক স্টক লিখুন।');return}
+  const old=c.n+' / '+c.q,diff=q-c.q;if(diff)S.prod.unshift({t:Date.now(),cid:c.id,q:0,e:0,d:0,s:0,net:diff,k:'adj',note:'Admin stock correction'});
   c.n=n;c.hex=$('#eh').value;c.q=q;log('রঙ সংশোধন: '+old+' → '+n+' / '+q);close();render()};
 }
 function accSheet(){
  open(`<h3>জমা / খরচ</h3><label>ধরন<select id="ak"><option value="out">খরচ</option><option value="in">জমা</option></select></label><label>পরিমাণ (৳)<input id="aa" type="number" inputmode="decimal" min="0"></label><label>বিবরণ<input id="an" placeholder="যেমন: সিলিকন কেনা"></label><label>তারিখ<input id="ad" type="date" value="${today()}"></label><button class="btn" id="ok">সংরক্ষণ করুন</button><button class="btn sec" id="cx">বাতিল</button>`);
  $('#cx').onclick=close;
- $('#ok').onclick=()=>{const a=+$('#aa').value;if(!a||a<=0){$('#aa').focus();return}
-  const k=$('#ak').value,n=$('#an').value.trim(),d=$('#ad').value||today();
-  S.led.push({k,a,n,d});log(`হিসাব: ${k==='in'?'জমা':'খরচ'} ৳${a} ${n}`);close();render()};
+ $('#ok').onclick=()=>{const a=+$('#aa').value;if(!Number.isFinite(a)||a<=0){$('#aa').focus();return}
+  const k=$('#ak').value,n=$('#an').value.trim(),d=$('#ad').value||today();S.led.push({k,a,n,d});log(`হিসাব: ${k==='in'?'জমা':'খরচ'} ৳${a} ${n}`);close();render()};
 }
 function logoResize(f,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,128,128);cb(c.toDataURL('image/png'))};im.src=r.result};r.readAsDataURL(f)}
 document.addEventListener('click',e=>{
  const t=e.target.closest('[data-t]');if(t){tab=t.dataset.t;render();scrollTo(0,0);return}
- const r=e.target.closest('[data-r]');if(r){remSheet(r.dataset.r);return}
+ const r=e.target.closest('[data-r]');if(r&&me==='admin'){remSheet(r.dataset.r);return}
  const c=e.target.closest('[data-c]');if(c){detailSheet(+c.dataset.c);return}
  const id=e.target.id;
  if(id==='sh')close();
  else if(id==='out'){log('লগআউট');me=null;render()}
  else if(id==='np')prodSheet();
- else if(id==='nc')colorSheet();
+ else if(id==='nc'&&me==='admin')colorSheet();
  else if(id==='ns')stockInSheet();
- else if(id==='na')accSheet();
- else if(id==='ss'){
+ else if(id==='na'&&me==='admin')accSheet();
+ else if(id==='ss'&&me==='admin'){
   const n=$('#cn').value.trim(),a=$('#pa').value.trim(),s=$('#ps').value.trim();
   if(!n||a.length<4||s.length<4||a===s){alert('নাম দিন। দুটো পিন আলাদা ও কমপক্ষে ৪ সংখ্যার হতে হবে।');return}
   const f=$('#cl').files[0],done=l=>{S.co.name=n;S.pin.admin=a;S.pin.staff=s;if(l)S.co.logo=l;log('সেটিং পরিবর্তন');render()};
   f?logoResize(f,done):done();
  }
 });
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close();const c=e.target.closest?.('[data-c]');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();detailSheet(+c.dataset.c)}});
 render();
 </script>
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
